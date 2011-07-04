@@ -6,6 +6,14 @@
 from scrapy.item import Item, Field
 
 class CookieAuditItem(Item):
-    # define the fields for your item here like:
-    # name = Field()
-    pass
+    """ Store the cookie details """
+    host = Field()
+    path = Field()
+    name = Field()
+    session = Field()
+    secure = Field()
+    p3p_policy = Field()
+    p3p_status = Field()
+    expires = Field()
+    created = Field()
+    last_accessed = Field()
