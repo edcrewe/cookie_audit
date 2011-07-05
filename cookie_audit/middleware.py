@@ -11,7 +11,7 @@ COOKIE_ATTRS = ['version','name','value', 'port',
 
 class SaveCookiesMiddleware(CookiesMiddleware):
     """ Subclass the standard cookies middleware but store the cookies data """
-    pipe = JsonWriterPipeline()
+    pipe = JsonWriterPipeline('cookies.json')
 
     def process_response(self, request, response, spider):
         if 'dont_merge_cookies' in request.meta:
@@ -54,7 +54,7 @@ class SaveCookiesMiddleware(CookiesMiddleware):
         if cookie:
             item = CookieAuditItem()
             for attr in COOKIE_ATTRS:
-                item[attr] = str(getattr(cookie, attr, ''))
+                item[attr] = getattr(cookie, attr, '')
             if hxs:
                 item['url'] = url
                 title = hxs.select('/html/head/title/text()').extract()
@@ -63,7 +63,7 @@ class SaveCookiesMiddleware(CookiesMiddleware):
                 h1 = hxs.select('/html/body/h1/text()').extract()
                 if h1:
                     item['page_h1'] = h1[0]
-            self.pipe.process_item(item, hxs)
+            self.pipe.process_item(item)
 
     def _save_cookies(self, response, request, jar):
         """Save responses where cookies are set """
