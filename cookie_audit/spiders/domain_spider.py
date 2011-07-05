@@ -1,7 +1,7 @@
 from scrapy.spider import BaseSpider
 from scrapy.selector import HtmlXPathSelector
 from scrapy.http import Request
-from settings import DOMAINS, URLS
+from cookie_audit.settings import DOMAINS, URLS
 
 class DomainSpider(BaseSpider):
     """ Domain spider crawls any subdomain that ends with *.mydomain.com 
