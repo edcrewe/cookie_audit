@@ -21,14 +21,17 @@ a plugin for Firefox. Although very useful it is not so suited to a
 full automatic audit of a website, since it is dependent on the user manually 
 clicking around the site. 
 
-It could potentially be automated by, for example, writing a Selenium triggered crawl
-to push Firefox with the privacy dashboard plugin across a whole site, but this
-seems a rather top heavy inelegant way of doing it, when there are spiders available
-that can retrieve cookies.
+It could potentially be automated by, for example, installing the plugin then
+using scrapies Firefox client option with the privacy dashboard plugin across a whole site, 
+but this seems a rather top heavy inelegant way of doing it, when spiders themselves
+can retrieve the cookies.
 
 This software is a set of configuration scripts for one such spider, Scrapy.
 
 http://scrapy.org/ 
+
+Installation details on the site, or alternatively install fabric and virtualenv
+then run the fabfile in this directory.
 
 Auditing your domain
 --------------------
