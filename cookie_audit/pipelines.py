@@ -18,3 +18,5 @@ class JsonWriterPipeline(object):
         line = json.dumps(dict(item)) + "\n"
         self.file.write(line)
         return item
+
+

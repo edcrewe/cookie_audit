@@ -33,7 +33,10 @@ class DomainSpider(BaseSpider):
                 if url:
                     yield Request(url, callback=self.parse) 
         else:
-            self.pipe.process_item(item)        
+            try:
+                item.save()
+            except:
+                self.pipe.process_item(item)        
 
     def domain_check(self, url):
         """ Test if top level domain is OK for next url 

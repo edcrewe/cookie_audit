@@ -63,7 +63,10 @@ class SaveCookiesMiddleware(CookiesMiddleware):
                 h1 = hxs.select('/html/body/h1/text()').extract()
                 if h1:
                     item['page_h1'] = h1[0]
-            self.pipe.process_item(item)
+            try:
+                item.save()
+            except:
+                self.pipe.process_item(item)
 
     def _save_cookies(self, response, request, jar):
         """Save responses where cookies are set """
