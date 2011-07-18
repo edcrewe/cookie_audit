@@ -3,10 +3,12 @@ from cookie_audit.pipelines import JsonWriterPipeline
 from scrapy.selector import HtmlXPathSelector
 from cookie_audit.items import CookieAuditItem
 from scrapy import log
+from datetime import datetime
+
 COOKIE_ATTRS = ['version','name','value', 'port',
                 'port_specified','domain','domain_specified', 
                 'domain_initial_dot','path', 'path_specified', 
-                'secure', 'expires', 'discard', 
+                'secure', 'discard', 
                 'comment', 'comment_url', 'rest', 'rfc2109']
 
 class SaveCookiesMiddleware(CookiesMiddleware):
@@ -55,8 +57,10 @@ class SaveCookiesMiddleware(CookiesMiddleware):
             item = CookieAuditItem()
             for attr in COOKIE_ATTRS:
                 item[attr] = getattr(cookie, attr, '')
+            if hasattr(cookie, 'expiry'):
+                item['expiry'] = datetime(cookie.expiry)
+            item['url'] = url
             if hxs:
-                item['url'] = url
                 title = hxs.select('/html/head/title/text()').extract()
                 if title:
                     item['page_title'] = title[0]
@@ -73,7 +77,13 @@ class SaveCookiesMiddleware(CookiesMiddleware):
     def _save_cookies(self, response, request, jar):
         """Save responses where cookies are set """
         if response:
-            hxs = HtmlXPathSelector(response)
+            if hasattr(response, 'encoding'):
+                try:
+                    hxs = HtmlXPathSelector(response)
+                except:
+                    hxs = None
+            else:
+                hxs = None
             cookies = jar.make_cookies(response, request)
             for cookie in cookies:
                 self._save_each_cookie(cookie, hxs, response.url)
