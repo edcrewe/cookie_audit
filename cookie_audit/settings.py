@@ -23,4 +23,4 @@ ITEM_PIPELINES = [
 
 # Set your domain crawl here
 DOMAINS = ["bris.ac.uk", "bristol.ac.uk"]
-URLS = ['http://www.bris.ac.uk',]
+URLS = ['http://www.google.co.uk/search?q=site%3Abristol.ac.uk',]

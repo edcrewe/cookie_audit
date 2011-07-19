@@ -25,6 +25,7 @@ class CookieAuditModel(models.Model):
     comment_url = models.URLField(max_length=500, null=True, default='')
     rest = models.CharField(max_length=100, null=True)
     rfc2109 = models.BooleanField(default=False)
+    crawled_date = models.DateTimeField(auto_now=True)
 
     def __unicode__(self):
         return '%s at %s' % (self.name, self.url)

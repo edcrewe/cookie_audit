@@ -57,8 +57,9 @@ class SaveCookiesMiddleware(CookiesMiddleware):
             item = CookieAuditItem()
             for attr in COOKIE_ATTRS:
                 item[attr] = getattr(cookie, attr, '')
-            if hasattr(cookie, 'expiry'):
-                item['expiry'] = datetime(cookie.expiry)
+            if hasattr(cookie, 'expires'):
+                item['expires'] = datetime(cookie.expiry)
+            item['crawled_date'] = datetime.now()
             item['url'] = url
             if hxs:
                 title = hxs.select('/html/head/title/text()').extract()
