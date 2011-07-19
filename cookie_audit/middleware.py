@@ -58,7 +58,8 @@ class SaveCookiesMiddleware(CookiesMiddleware):
             for attr in COOKIE_ATTRS:
                 item[attr] = getattr(cookie, attr, '')
             if hasattr(cookie, 'expires'):
-                item['expires'] = datetime(cookie.expiry)
+                if cookie.expires:
+                    item['expires'] = datetime.fromtimestamp(float(cookie.expires))
             item['crawled_date'] = datetime.now()
             item['url'] = url
             if hxs:
