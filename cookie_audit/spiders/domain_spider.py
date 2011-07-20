@@ -41,6 +41,9 @@ class DomainSpider(BaseSpider):
     def domain_check(self, url):
         """ Test if top level domain is OK for next url 
             (so one link depth external)
+            Or if matches with start URLs so for example could use Google
+            to ensure domain coverage, eg. 
+            with http://www.google.co.uk/search?q=site:*.mydomain.com
         """
         original = url
         if url:
@@ -48,5 +51,8 @@ class DomainSpider(BaseSpider):
                 url = url.split('/')[2]
                 for domain in self.yield_allowed_domains:        
                     if url.endswith(domain):
+                        return original
+                for start in self.start_urls:
+                    if url.startswith(start):
                         return original
         return ''
