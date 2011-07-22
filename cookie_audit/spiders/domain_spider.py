@@ -32,7 +32,7 @@ class DomainSpider(BaseSpider):
                 url = self.domain_check(url)
                 if url:
                     yield Request(url, callback=self.parse) 
-        else:
+            # Just save crawled pages not files/images
             try:
                 item.save()
             except:
